@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useState } from 'react';
 import './App.css';
 import Box from './componants/Box';
@@ -14,11 +15,41 @@ function App() {
     setIsXChance(!isXChance);
   }
 
-  
+
+  useEffect(()=> {
+    const winner = checkWinner();
+
+    if (winner){
+      alert(`${winner} won the game!`);
+    }
+
+  },[gameState])
+
+
+  const checkWinner = () => {
+    const lines = [
+      [0, 1, 2],
+      [3, 4, 5],
+      [6, 7, 8],
+      [0, 3, 6],
+      [1, 4, 7],
+      [2, 5, 8],
+      [0, 4, 8],
+      [2, 4, 6]      
+    ];
+    for (let i=0; i<lines.length; i++){
+      const [a, b, c] = lines[i];
+
+      if(gameState[a] && gameState[a] === gameState[b] && gameState[a] === gameState[c]){
+        return gameState[a];
+      }      
+    }
+    return null;
+  }
 
   return (
     <div className="App">
-      <div className="board p-5 bg-slate-400 w-1/4 mx-auto">
+      <div className="board p-5 bg-slate-200 w-1/4 mx-auto mt-20">
 
         <div className=" mx-auto flex justify-between mb-6">
         <Box state={gameState[0]} onClick={()=> onSquareClicked(0)} />
@@ -36,9 +67,9 @@ function App() {
         <Box state={gameState[8]} onClick={()=> onSquareClicked(8)} />
         </div>
 
+        <button className='px-3 py-3 bg-blue-600 rounded-lg text-white font-bold mt-5' onClick={()=> setGameState(initialState)}>Reset Game</button>
+
       </div>
-
-
 
     </div>
   );
