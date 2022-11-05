@@ -15,7 +15,6 @@ function App() {
     setIsXChance(!isXChance);
   }
 
-
   useEffect(()=> {
     const winner = checkWinner();
 
@@ -24,7 +23,6 @@ function App() {
     }
 
   },[gameState])
-
 
   const checkWinner = () => {
     const lines = [
